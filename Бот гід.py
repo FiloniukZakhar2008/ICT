@@ -34,7 +34,7 @@ def handle_code(update: Update, context: CallbackContext) -> None:
 # Основна функція для запуску бота
 def main():
     # Створюємо об'єкт Updater, який буде обробляти запити від Telegram
-    updater = Updater("7826632043:AAHESgJ2G718BkrBUS7lF28hmf2SFjV0pdE", use_context=True)  # Замість YOUR_TELEGRAM_BOT_TOKEN вставте ваш токен
+    updater = Updater("7826632043:AAHESgJ2G718BkrBUS7lF28hmf2SFjV0pdE", use_context=True) 
     dp = updater.dispatcher  # Dispatcher для обробки команд і повідомлень
 
     # Додаємо обробник команди /start
