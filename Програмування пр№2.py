@@ -1,44 +1,31 @@
+hello = 'hello world'
 name = 'Zakhar'
-secondname = 'Filonyuk'
-age = 16
-print (name,secondname,age)
-print (type(name),type(secondname),type(age))
-count_int = 0
-count_str = 0
-count_bool = 0
-count_set = 0
-count_list = 0
-count_tuple = 0
-count_float = 0
-lst_notnull = []
-max_value = -1
-types_count = {str, int, bool, set, list, tuple, float}
-lst_count_types = [count_set, count_float, count_tuple, count_list, count_bool, count_str, count_int]
-lst_name_type = ['set', 'float', 'tuple', 'list', 'bool', str, int]
-lst = [name, secondname, age]
-for item in lst:
-    if type(item) == int:
-        lst_count_types[-1] += 1
-    elif type(item) == str:
-        lst_count_types[-2] += 1
+prizv = 'Filonyuk'
+age = '16'
 
-for item in lst_count_types:
-    if item != 0:
-        lst_notnull.append(item)
-    if len(lst_notnull) == 0:
-        print('Good')
-    else:
-        if item == max_value:
-            print('Not')
-            break
+print(hello, type(hello))
+print(name, type(name))
+print(prizv, type(prizv))
+print(age, type(age))
 
-        elif item > max_value:
-            max_value = item
+list = [hello, name, prizv, age, 55]
+print(list)
+print('_'*10)
 
-inn = lst_count_types.index(max_value)
+one_type = type(list[0])
+per_type = True  # Перемикач
 
-print(lst_name_type[inn])
+# Перевірка чи всі типи однакові
+for var in list:
+    if type(var) != one_type: #!= не дорівнює
+        per_type = False
+        break
 
-for item in lst:
-    if type(item) != lst_name_type[inn]:
-        lst.remove(item)
+if per_type:
+    print("good")
+else:
+    # Створення списку з зміннами
+    filter_list = [var for var in list if type(var) == one_type]
+
+    print("Типи відрізняються. Залишаємо тільки змінні одного типу:")
+    print("Відфільтрований список:", filter_list)
