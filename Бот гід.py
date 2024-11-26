@@ -1,25 +1,34 @@
-# Імпортуємо необхідні бібліотеки
-import json  # Для роботи з файлом JSON, де зберігається інформація про експонати
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+import telebot
 
-# Завантажуємо дані про експонати з файлу "museum_data.json"
-with open("museum_data.json", "r", encoding="utf-8") as f:
-    museum_data = json.load(f)  # Завантажуємо JSON як словник Python
+# Дані експонатів
+museum_data = {
+    "EXP001": {
+        "назва": "Мона Ліза",
+        "автор": "Леонардо да Вінчі",
+        "рік": "1503-1506",
+        "опис": "Одна з найвідоміших картин у світі, зображення жінки з загадковою посмішкою."
+    },
+    "EXP002": {
+        "назва": "Зоряна ніч",
+        "автор": "Вінсент ван Гог",
+        "рік": "1889",
+        "опис": "Картина, що зображує нічне небо з вихрами світла і зірками."
+    }
+}
 
-# Функція, яка викликається, коли користувач вводить команду /start
-def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text(
-        "Вітаю! Я музейний гід. Введіть код експоната, щоб отримати інформацію про нього."
-    )
+bot = telebot.TeleBot("7826632043:AAHESgJ2G718BkrBUS7lF28hmf2SFjV0pdE")
 
-# Функція для обробки повідомлення з кодом експоната
-def handle_code(update: Update, context: CallbackContext) -> None:
-    code = update.message.text.strip().upper()  # Перетворюємо код на великі літери
-    # Перевіряємо, чи є код у базі даних
+# Функція старту бота
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.reply_to(message, "Вітаю! Я музейний гід. Введіть код експоната, щоб отримати інформацію про нього.")
+
+# Функція для обробки введеного коду експоната
+@bot.message_handler(func=lambda message: True)
+def handle_code(message):
+    code = message.text.strip().upper()  # Перетворюємо код на верхній регістр
     if code in museum_data:
         exhibit = museum_data[code]
-        # Формуємо відповідь з інформацією про експонат
         response = (
             f"Назва: {exhibit['назва']}\n"
             f"Автор: {exhibit['автор']}\n"
@@ -28,24 +37,8 @@ def handle_code(update: Update, context: CallbackContext) -> None:
         )
     else:
         response = "Вибачте, експонат з таким кодом не знайдено. Перевірте правильність коду."
-    # Відправляємо відповідь користувачу
-    update.message.reply_text(response)
+    bot.reply_to(message, response)
 
-# Основна функція для запуску бота
-def main():
-    # Створюємо об'єкт Updater, який буде обробляти запити від Telegram
-    updater = Updater("7826632043:AAHESgJ2G718BkrBUS7lF28hmf2SFjV0pdE", use_context=True) 
-    dp = updater.dispatcher  # Dispatcher для обробки команд і повідомлень
-
-    # Додаємо обробник команди /start
-    dp.add_handler(CommandHandler("start", start))
-    # Додаємо обробник звичайних текстових повідомлень (введення коду експоната)
-    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_code))
-
-    # Запускаємо бота
-    updater.start_polling()
-    updater.idle()
-
-# Запуск бота, коли запускається цей файл
+# Запускаємо бота
 if __name__ == "__main__":
-    main()
+    bot.polling()
