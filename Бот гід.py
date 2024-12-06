@@ -1,4 +1,4 @@
-import telebot
+import telebot #імпортуємо бібліотеку telebot
 
 # Дані експонатів
 museum_data = {
@@ -19,14 +19,14 @@ museum_data = {
 bot = telebot.TeleBot("7826632043:AAHESgJ2G718BkrBUS7lF28hmf2SFjV0pdE")
 
 # Функція старту бота
-@bot.message_handler(commands=['start'])
-def start(message):
+@bot.message_handler(commands=['start']) #Визначає функцію, яка викликається при отриманні команди /start
+def start(message): #задаєм функцію щоб після команди старт бот виводив вітаю...
     bot.reply_to(message, "Вітаю! Я музейний гід. Введіть код експоната, щоб отримати інформацію про нього.")
 
 # Функція для обробки введеного коду експоната
-@bot.message_handler(func=lambda message: True)
+@bot.message_handler(func=lambda message: True)# обробка повідомлень від користувача
 def handle_code(message):
-    code = message.text.strip().upper()  # Перетворюємо код на верхній регістр
+    code = message.text.strip().upper()  # strip i upper видаляють зайві пробіли і перетворюють текст на верхній регістр (щоб код був нечутливим до регістру
     if code in museum_data:
         exhibit = museum_data[code]
         response = (
@@ -40,5 +40,5 @@ def handle_code(message):
     bot.reply_to(message, response)
 
 # Запускаємо бота
-if __name__ == "__main__":
+if __name__ == "__main__": #Перевірка, що файл виконується напряму, а не імпортується
     bot.polling()
