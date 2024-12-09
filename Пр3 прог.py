@@ -1,50 +1,44 @@
 lst = [1, 2, 3, 4, 5, 6, 3, 4, 5, 7, 6, 5, 4, 3, 4, 5, 4, 3, 11, 'Привіт', 'Анаконда']
 
-# Функція для отримання унікальних елементів зі списку
 def def_lst_unique(lst):
-    lst_unique = []  # Список для зберігання унікальних значень
-    lst_append = []  # Список для перетворених значень (нижній регістр для рядків)
+    lst_unique = []  
+    lst_append = []  
 
-    # Обробка елементів вхідного списку
     for a in lst:
-        if type(a) == str:  # Якщо елемент — рядок
-            a_lower = a.lower()  # Перетворюємо рядок у нижній регістр
-            lst_append.append(a_lower)  # Додаємо перетворений рядок до списку
-        else:  # Якщо елемент — не рядок
-            lst_append.append(a)  # Додаємо його без змін
+        if type(a) == str:  
+            a_lower = a.lower()  
+            lst_append.append(a_lower)  
+        else:  
+            lst_append.append(a)  
 
-    lst_in_set = set()  # Множина для відстеження вже доданих елементів
+    lst_in_set = set()  
 
-    # Вибираємо унікальні елементи зі списку
     for item in lst_append:
-        if item not in lst_in_set:  # Якщо елемент ще не зустрічався
-            lst_unique.append(item)  # Додаємо його до списку унікальних
-            lst_in_set.add(item)  # Позначаємо елемент як "вже доданий"
+        if item not in lst_in_set:  
+            lst_unique.append(item)  
+            lst_in_set.add(item)  
 
-    return lst_unique  # Повертаємо список унікальних значень
+    return lst_unique  
 
-# Функція для сортування списку
+
 def def_lst_sort(lst):
-    lst_str = []  # Список для рядків
-    lst_int = []  # Список для чисел
+    lst_str = []  
+    lst_int = []  
 
-    # Розподіл елементів на числа і рядки
+    
     for k in lst:
-        if type(k) == int:  # Якщо елемент — число
-            lst_int.append(k)  # Додаємо до списку чисел
-        elif type(k) == str:  # Якщо елемент — рядок
-            lst_str.append(k)  # Додаємо до списку рядків
+        if type(k) == int:  
+            lst_int.append(k)  
+        elif type(k) == str:  
+            lst_str.append(k) 
 
-    lst_str.sort()  # Сортуємо рядки за алфавітом
-    lst_int.sort()  # Сортуємо числа за зростанням
+    lst_str.sort()  
+    lst_int.sort()  
 
-    return lst_int + lst_str  # Повертаємо об'єднаний список чисел і рядків
+    return lst_int + lst_str 
 
-# Отримуємо унікальні значення зі списку
 r = def_lst_unique(lst)
 
-# Сортуємо отримані унікальні значення
 sorted_list = def_lst_sort(r)
 
-# Виводимо відсортований список
 print(sorted_list)
